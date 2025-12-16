@@ -7,12 +7,18 @@ import (
 	"strconv"
 	"strings"
 
-	aoc25 "github.com/marcelohdez/aoc25/day1"
+	day1 "github.com/marcelohdez/aoc25/day1"
+	day2 "github.com/marcelohdez/aoc25/day2"
 )
 
 func help(exitCode ...int) {
 	fmt.Println("Usage:")
-	fmt.Println("\tgo run . <DAY>")
+	fmt.Println("\tgo run . <DAY> [FILES...]")
+	fmt.Println()
+	fmt.Println("Where FILES is optional, denoting specific input files to run")
+	fmt.Println()
+	fmt.Println("Example:")
+	fmt.Println("\tgo run . 2 ./day2/self-test.txt")
 
 	if len(exitCode) > 0 {
 		os.Exit(exitCode[0])
@@ -21,7 +27,7 @@ func help(exitCode ...int) {
 }
 
 func main() {
-	if len(os.Args) != 2 {
+	if len(os.Args) == 1 {
 		help()
 	}
 
@@ -30,7 +36,7 @@ func main() {
 		help()
 	}
 
-	solutions := []func(filename string){aoc25.SolutionDay1}
+	solutions := []func(filename string){day1.SolutionDay1, day2.SolutionDay2}
 
 	if day < 0 || day > len(solutions) {
 		fmt.Println("Day ", day, " does not exist.")
@@ -38,6 +44,16 @@ func main() {
 		help()
 	}
 
+	// run specific files
+	if len(os.Args) > 2 {
+		for i := 2; i < len(os.Args); i++ {
+			fmt.Println("----", os.Args[i])
+			solutions[day-1](os.Args[i])
+		}
+		return
+	}
+
+	// run files in day's folder
 	dir := fmt.Sprintf("day%d", day)
 	entries, err := os.ReadDir(dir)
 	if err != nil {

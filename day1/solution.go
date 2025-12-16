@@ -1,5 +1,5 @@
-// Package aoc25
-package aoc25
+// Package day1
+package day1
 
 import (
 	"bufio"
