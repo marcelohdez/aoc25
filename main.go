@@ -8,9 +8,10 @@ import (
 	"strconv"
 	"strings"
 
-	day1 "github.com/marcelohdez/aoc25/day1"
-	day2 "github.com/marcelohdez/aoc25/day2"
+	"github.com/marcelohdez/aoc25/day1"
+	"github.com/marcelohdez/aoc25/day2"
 	"github.com/marcelohdez/aoc25/day3"
+	"github.com/marcelohdez/aoc25/day4"
 )
 
 func help(msg ...any) {
@@ -88,9 +89,10 @@ func main() {
 	}
 
 	solutions := []func(*bufio.Scanner){
-		day1.SolutionDay1p2,
-		day2.SolutionDay2p2,
-		day3.SolutionDay3p2,
+		day1.SolutionDay1,
+		day2.SolutionDay2,
+		day3.SolutionDay3,
+		day4.SolutionDay4,
 	}
 
 	if day <= 0 || day > len(solutions) {

@@ -57,7 +57,7 @@ func splitOnComma(data []byte, atEOF bool) (advance int, token []byte, err error
 	return 0, nil, nil
 }
 
-func SolutionDay2p2(scnr *bufio.Scanner) {
+func SolutionDay2(scnr *bufio.Scanner) {
 	res := 0
 
 	scnr.Split(splitOnComma)

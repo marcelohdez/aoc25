@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func SolutionDay1p2(scnr *bufio.Scanner) {
+func SolutionDay1(scnr *bufio.Scanner) {
 	position := 50
 	res := 0
 

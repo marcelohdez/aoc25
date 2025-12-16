@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func SolutionDay3p2(scnr *bufio.Scanner) {
+func SolutionDay3(scnr *bufio.Scanner) {
 	res := 0
 
 	for scnr.Scan() {
