@@ -9,6 +9,7 @@ import (
 
 	day1 "github.com/marcelohdez/aoc25/day1"
 	day2 "github.com/marcelohdez/aoc25/day2"
+	"github.com/marcelohdez/aoc25/day3"
 )
 
 func help(exitCode ...int) {
@@ -36,7 +37,7 @@ func main() {
 		help()
 	}
 
-	solutions := []func(filename string){day1.SolutionDay1, day2.SolutionDay2}
+	solutions := []func(filename string){day1.SolutionDay1, day2.SolutionDay2, day3.SolutionDay3}
 
 	if day < 0 || day > len(solutions) {
 		fmt.Println("Day ", day, " does not exist.")
