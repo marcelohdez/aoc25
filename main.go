@@ -90,7 +90,7 @@ func main() {
 	solutions := []func(*bufio.Scanner){
 		day1.SolutionDay1p2,
 		day2.SolutionDay2p2,
-		day3.SolutionDay3p1,
+		day3.SolutionDay3p2,
 	}
 
 	if day <= 0 || day > len(solutions) {
