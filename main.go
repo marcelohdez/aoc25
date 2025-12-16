@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"path"
@@ -12,7 +13,12 @@ import (
 	"github.com/marcelohdez/aoc25/day3"
 )
 
-func help(exitCode ...int) {
+func help(msg ...any) {
+	if len(msg) > 0 {
+		fmt.Println(msg...)
+		fmt.Println()
+	}
+
 	fmt.Println("Usage:")
 	fmt.Println("\tgo run . <DAY> [FILES...]")
 	fmt.Println()
@@ -21,54 +27,81 @@ func help(exitCode ...int) {
 	fmt.Println("Example:")
 	fmt.Println("\tgo run . 2 ./day2/self-test.txt")
 
-	if len(exitCode) > 0 {
-		os.Exit(exitCode[0])
-	}
 	os.Exit(1)
+}
+
+func getPaths(day int) ([]string, error) {
+	// build filepaths we will read
+	var paths []string
+
+	if len(os.Args) > 2 { // use given files only
+		paths = os.Args[2:]
+	} else { // use all .txt files in day directory
+		dir := fmt.Sprintf("day%d", day)
+		entries, err := os.ReadDir(dir)
+		if err != nil {
+			return nil, err
+		}
+
+		for _, entry := range entries {
+			if !entry.IsDir() && strings.HasSuffix(entry.Name(), ".txt") {
+				paths = append(paths, path.Join(dir, entry.Name()))
+			}
+		}
+	}
+
+	return paths, nil
+}
+
+func run(paths []string, solution func(*bufio.Scanner)) {
+	// run solution with each path's scanner
+	for _, filepath := range paths {
+		file, err := os.Open(filepath)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		defer func() {
+			err = file.Close()
+			if err != nil {
+				fmt.Println(err)
+			}
+		}()
+
+		fmt.Println("----", path.Base(filepath))
+		scnr := bufio.NewScanner(file)
+		solution(scnr)
+	}
+
+	fmt.Println("----")
 }
 
 func main() {
 	if len(os.Args) == 1 {
-		help()
+		help("Not enough arguments.")
 	}
 
 	day, err := strconv.Atoi(os.Args[1])
 	if err != nil {
-		help()
+		help("DAY was not an integer.")
 	}
 
-	solutions := []func(filename string){day1.SolutionDay1, day2.SolutionDay2, day3.SolutionDay3}
-
-	if day < 0 || day > len(solutions) {
-		fmt.Println("Day ", day, " does not exist.")
-		fmt.Println()
-		help()
+	solutions := []func(*bufio.Scanner){
+		day1.SolutionDay1p2,
+		day2.SolutionDay2p2,
+		day3.SolutionDay3p1,
 	}
 
-	// run specific files
-	if len(os.Args) > 2 {
-		for i := 2; i < len(os.Args); i++ {
-			fmt.Println("----", os.Args[i])
-			solutions[day-1](os.Args[i])
-		}
-		return
+	if day <= 0 || day > len(solutions) {
+		help("Day", day, "does not exist")
 	}
 
-	// run files in day's folder
-	dir := fmt.Sprintf("day%d", day)
-	entries, err := os.ReadDir(dir)
+	paths, err := getPaths(day)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	for _, entry := range entries {
-		if !entry.IsDir() && strings.HasSuffix(entry.Name(), ".txt") {
-			filepath := path.Join(dir, entry.Name())
-
-			fmt.Println("----", entry.Name())
-			solutions[day-1](filepath)
-		}
-	}
-	fmt.Println("----")
+	run(paths, solutions[day-1])
 }

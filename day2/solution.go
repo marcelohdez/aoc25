@@ -6,7 +6,6 @@ import (
 	"bytes"
 	"fmt"
 	"math"
-	"os"
 	"strconv"
 	"strings"
 )
@@ -58,20 +57,9 @@ func splitOnComma(data []byte, atEOF bool) (advance int, token []byte, err error
 	return 0, nil, nil
 }
 
-func SolutionDay2(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	defer func() {
-		_ = file.Close()
-	}()
-
+func SolutionDay2p2(scnr *bufio.Scanner) {
 	res := 0
 
-	scnr := bufio.NewScanner(file)
 	scnr.Split(splitOnComma)
 	for scnr.Scan() {
 		rangeStr := strings.TrimSpace(scnr.Text())

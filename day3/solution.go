@@ -4,23 +4,11 @@ package day3
 import (
 	"bufio"
 	"fmt"
-	"os"
 )
 
-func SolutionDay3(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	defer func() {
-		_ = file.Close()
-	}()
-
+func SolutionDay3p1(scnr *bufio.Scanner) {
 	res := 0
 
-	scnr := bufio.NewScanner(file)
 	for scnr.Scan() {
 		line := scnr.Text()
 

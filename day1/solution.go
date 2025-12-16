@@ -4,25 +4,13 @@ package day1
 import (
 	"bufio"
 	"fmt"
-	"os"
 	"strconv"
 )
 
-func SolutionDay1(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	defer func() {
-		_ = file.Close()
-	}()
-
+func SolutionDay1p2(scnr *bufio.Scanner) {
 	position := 50
 	res := 0
 
-	scnr := bufio.NewScanner(file)
 	for scnr.Scan() {
 		line := scnr.Text()
 		direction := line[0]
