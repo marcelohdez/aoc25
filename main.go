@@ -12,6 +12,7 @@ import (
 	"github.com/marcelohdez/aoc25/day2"
 	"github.com/marcelohdez/aoc25/day3"
 	"github.com/marcelohdez/aoc25/day4"
+	"github.com/marcelohdez/aoc25/day5"
 )
 
 func help(msg ...any) {
@@ -93,6 +94,7 @@ func main() {
 		day2.SolutionDay2,
 		day3.SolutionDay3,
 		day4.SolutionDay4,
+		day5.SolutionDay5,
 	}
 
 	if day <= 0 || day > len(solutions) {
